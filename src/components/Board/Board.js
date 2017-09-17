@@ -67,12 +67,14 @@ class Board extends React.Component {
               <td data-hook="cell" onClick={() => this.cellClicked(rowIndex, cellIndex)} key={cellIndex}>{cell}</td>)}</tr>)}
         </tbody>
       </table>
+
+      <div>Current turn: <div data-hook={'current-player'}>{this.state.currentPlayer}</div></div>
     </div>);
   }
 }
 
 Board.propTypes = {
-  onGameOver: PropTypes.func.isRequired
+  onGameOver: PropTypes.func
 };
 
 export default Board;

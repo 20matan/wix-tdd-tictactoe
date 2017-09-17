@@ -4,16 +4,20 @@ import {mount} from 'enzyme';
 import Board, {getGameStatus} from './Board';
 
 
+const clickCellAt = index => wrapper.find('[data-hook="cell"]').at(index).simulate('click');
+const getCellTextAt = index => wrapper.find('[data-hook="cell"]').at(index).text();
+const getTurnText = () => wrapper.find('[data-hook="current-player"]').text()
+
+
+let wrapper;
+const render = () => mount(
+  <Board />, {attachTo: document.createElement('div')}
+);
+
+
 describe('cellClicked', () => {
-  const clickCellAt = index => wrapper.find('[data-hook="cell"]').at(index).simulate('click');
-  const getCellTextAt = index => wrapper.find('[data-hook="cell"]').at(index).text();
 
   afterEach(() => wrapper.detach());
-
-  let wrapper;
-  const render = () => mount(
-    <Board />, {attachTo: document.createElement('div')}
-  );
 
   it('will not allow to click a non-empty cell', () => {
     wrapper = render();
@@ -23,6 +27,23 @@ describe('cellClicked', () => {
     expect(getCellTextAt(0)).to.eq('X');
   })
 })
+
+describe('turns', () => {
+
+  afterEach(() => wrapper.detach());
+
+  it('should start with user X turn', () => {
+    wrapper = render();
+    expect(getTurnText()).to.equal('X')
+  });
+
+  it('should show O turn after X played', () => {
+    wrapper = render();
+    expect(getTurnText()).to.equal('X')
+    clickCellAt(0);
+    expect(getTurnText()).to.equal('O')
+  });
+});
 
 describe('getGameStatus', () => {
   it('"X" should win for first row', () => {
