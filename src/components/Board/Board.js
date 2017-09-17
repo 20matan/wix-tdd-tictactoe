@@ -39,12 +39,19 @@ export const getGameStatus = board => {
 class Board extends React.Component {
   constructor() {
     super();
-    this.state = {board: [['', '', ''], ['', '', ''], ['', '', '']], currentPlayer: 'X'};
+
+    this.initialState = {board: [['', '', ''], ['', '', ''], ['', '', '']], currentPlayer: 'X'};
+    this.state = this.initialState
+  }
+
+  initGame = () => {
+    this.setState(this.initialState)
+    this.props.onRestartGame()
   }
 
   cellClicked(rowI, cellI) {
 
-    if (this.state.board[rowI][cellI] !== '')
+    if (this.state.board[rowI][cellI] !== '' || this.props.winner)
       return
 
     const board = this.state.board.map((row, rowIndex) =>
@@ -68,13 +75,15 @@ class Board extends React.Component {
         </tbody>
       </table>
 
-      <div>Current turn: <div data-hook={'current-player'}>{this.state.currentPlayer}</div></div>
+      <div>Current turn: <div style={{'backgroundColor': 'red'}} data-hook={'current-player'}>{this.state.currentPlayer}</div></div>
+      <input data-hook={'restart-game'} type={'button'} onClick={this.initGame} value={'Restart'} />
     </div>);
   }
 }
 
 Board.propTypes = {
-  onGameOver: PropTypes.func
+  onGameOver: PropTypes.func,
+  winner: PropTypes.string,
 };
 
 export default Board;

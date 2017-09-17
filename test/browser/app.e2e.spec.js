@@ -42,6 +42,19 @@ describe('React application', () => {
     expect(await getWinnerMessage()).to.equal('X wins!');
   });
 
+  it('shouldnt allow to continue play after a win', async () => {
+    await navigate();
+    await clickCellAt(0);
+    await clickCellAt(3);
+    expect(await isWinnerMessageVisible()).to.equal(false);
+    await clickCellAt(1);
+    await clickCellAt(4);
+    await clickCellAt(2);
+    expect(await getWinnerMessage()).to.equal('X wins!');
+    await clickCellAt(5);
+    expect(await getCellContentAt(5)).to.equal('');
+  });
+
   it('should start with X turn', async () => {
     await navigate();
     expect(await getTurnMessage()).to.equal('X')
