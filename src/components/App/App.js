@@ -8,11 +8,18 @@ class App extends React.Component {
     this.state = {winner: ''};
   }
 
+  _getWinnerText = () => {
+    const { winner } = this.state
+    if (winner === 'TIE')
+      return "it's a tie"
+    return `${this.state.winner} wins!`
+  }
+
   render() {
     return (
       <div data-hook="app" className={s.root}>
         <Board onGameOver={({winner}) => this.setState({winner})}/>
-        {this.state.winner && <div data-hook="winner-message">{`${this.state.winner} wins!`}</div>}
+        {this.state.winner && <div data-hook="winner-message">{this._getWinnerText()}</div>}
       </div>
     );
   }

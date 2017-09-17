@@ -33,4 +33,18 @@ describe('App', () => {
     clickCellAt(2);
     expect(getWinnerMessage()).to.eq('O wins!');
   });
+
+  it('should show Its a tie message', () => {
+    wrapper = render()
+    clickCellAt(0)
+    clickCellAt(1)
+    clickCellAt(2)
+    clickCellAt(3)
+    clickCellAt(4)
+    clickCellAt(6)
+    clickCellAt(5)
+    clickCellAt(8)
+    clickCellAt(7)
+    expect(getWinnerMessage()).to.eq("it's a tie")
+  });
 });

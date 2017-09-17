@@ -46,12 +46,13 @@ class Board extends React.Component {
 
     if (this.state.board[rowI][cellI] !== '')
       return
-      
+
     const board = this.state.board.map((row, rowIndex) =>
       rowIndex !== rowI ? row : row.map((cell, cellIndex) => cellI !== cellIndex ? cell : this.state.currentPlayer));
 
-    if (getGameStatus(board)) {
-      this.props.onGameOver({winner: this.state.currentPlayer});
+    const gameStatus = getGameStatus(board)
+    if (gameStatus) {
+      this.props.onGameOver({winner: gameStatus});
     }
     const nextPlayer = this.state.currentPlayer === 'X' ? 'O' : 'X';
     this.setState({board, currentPlayer: nextPlayer});

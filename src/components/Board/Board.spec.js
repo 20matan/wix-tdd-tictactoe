@@ -15,7 +15,7 @@ describe('cellClicked', () => {
     <Board />, {attachTo: document.createElement('div')}
   );
 
-  it('should change first click to X', () => {
+  it('will not allow to click a non-empty cell', () => {
     wrapper = render();
     clickCellAt(0);
     expect(getCellTextAt(0)).to.eq('X');
