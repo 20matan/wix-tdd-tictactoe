@@ -43,6 +43,10 @@ class Board extends React.Component {
   }
 
   cellClicked(rowI, cellI) {
+
+    if (this.state.board[rowI][cellI] !== '')
+      return
+      
     const board = this.state.board.map((row, rowIndex) =>
       rowIndex !== rowI ? row : row.map((cell, cellIndex) => cellI !== cellIndex ? cell : this.state.currentPlayer));
 
